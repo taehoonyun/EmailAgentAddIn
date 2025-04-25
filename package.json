@@ -7,8 +7,14 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "generate-cert": "node scripts/generate-cert.js",
+    "generate-icon": "node scripts/generate-icon.js",
     "server": "node server.js",
     "build": "electron-builder",
+    "build:win": "electron-builder --win --x64",
+    "build:win32": "electron-builder --win --ia32",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "prebuild": "npm run generate-icon",
     "postinstall": "electron-builder install-app-deps"
   },
   "author": "Email AI Assistant Team",
@@ -25,7 +31,8 @@
   },
   "devDependencies": {
     "electron": "^25.2.0",
-    "electron-builder": "^24.4.0"
+    "electron-builder": "^24.4.0",
+    "png2icons": "^2.0.1"
   },
   "build": {
     "appId": "com.emailai.assistant",
@@ -33,15 +40,45 @@
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/.{idea,git,gitattributes,gitignore}",
+      "!**/{.DS_Store,.env,.env.*,.npmrc,*.lock}",
+      "!{.eslintignore,.eslintrc.js,.prettierrc}",
+      "!{*.conf.js,*.d.ts,*.md,*.yml}"
+    ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "publisherName": "Email AI Assistant Team"
     },
     "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Email AI Assistant",
-      "artifactName": "EmailAIAssistant-Setup-${version}.${ext}"
-    }
+      "artifactName": "EmailAIAssistant-Setup-${version}.${ext}",
+      "license": "LICENSE",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "EmailAIAssistant-Portable-${version}.${ext}"
+    },
+    "publish": null
   }
 }
