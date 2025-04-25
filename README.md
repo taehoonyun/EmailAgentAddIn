@@ -6,7 +6,7 @@
 
 A professional-grade Microsoft Outlook add-in that leverages AI to analyze emails and generate context-aware responses. This desktop application runs in your system tray and provides a seamless integration with Outlook to boost your email productivity.
 
-![Email AI Assistant](assets/logo-filled.png)
+![Email AI Assistant](public/assets/logo-filled.png)
 
 ## Key Features
 

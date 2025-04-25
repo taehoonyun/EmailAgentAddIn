@@ -62,8 +62,11 @@
           "arch": ["x64"]
         }
       ],
-      "icon": "assets/icon.ico",
-      "publisherName": "Email AI Assistant Team"
+      "icon": "public/assets/favicon.ico",
+      "publisherName": "Email AI Assistant Team",
+      "signAndEditExecutable": false,
+      "verifyUpdateCodeSignature": false,
+      "signingHashAlgorithms": ["sha256"]
     },
     "nsis": {
       "oneClick": false,
@@ -73,12 +76,33 @@
       "shortcutName": "Email AI Assistant",
       "artifactName": "EmailAIAssistant-Setup-${version}.${ext}",
       "license": "LICENSE",
-      "installerIcon": "assets/icon.ico",
-      "uninstallerIcon": "assets/icon.ico"
+      "installerIcon": "public/assets/favicon.ico",
+      "uninstallerIcon": "public/assets/favicon.ico"
     },
     "portable": {
       "artifactName": "EmailAIAssistant-Portable-${version}.${ext}"
     },
-    "publish": null
+    "publish": null,
+    "forceCodeSigning": false,
+    "npmRebuild": false,
+    "buildDependenciesFromSource": true,
+    "electronDownload": {
+      "cache": ".electron-cache"
+    },
+    "asar": {
+      "smartUnpack": true
+    },
+    "extraResources": [
+      {
+        "from": "public/assets",
+        "to": "assets"
+      }
+    ],
+    "fileAssociations": [],
+    "afterSign": "./scripts/notarize.js",
+    "asarUnpack": [
+      "node_modules/**/*.node",
+      "node_modules/**/*.dll"
+    ]
   }
 }
