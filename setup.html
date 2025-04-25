@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email AI Assistant Settings</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .minimize-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .minimize-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0063b1;
+        }
+        .success {
+            color: #10893e;
+            margin-top: 10px;
+        }
+        .error {
+            color: #e81123;
+            margin-top: 10px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .tab.active {
+            border-bottom: 2px solid #0078d7;
+            color: #0078d7;
+            font-weight: 500;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .step {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .step:before {
+            content: counter(step);
+            counter-increment: step;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            background-color: #0078d7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+        }
+        ol {
+            counter-reset: step;
+        }
+        .manual-img {
+            max-width: 80%;
+            display: block;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+        }
+        .info {
+            background-color: #f0f7ff;
+            border-left: 4px solid #0078d7;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        .tray-info {
+            background-color: #f0fff0;
+            border-left: 4px solid #10893e;
+            padding: 10px 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="minimizeToTray" class="minimize-btn">Minimize to Tray</button>
+        <div class="header-title">
+            <h1>Email AI Assistant</h1>
+        </div>
+        <div style="width: 120px;"></div> <!-- Spacer to balance the header -->
+    </header>
+    
+    <div class="container">
+        <div class="tray-info">
+            <p><strong>Note:</strong> This application will continue running in the system tray when minimized. You can access it anytime by clicking the icon in your system tray.</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="api-key">API Key Settings</div>
+            <div class="tab" data-tab="signature">Signature Settings</div>
+            <div class="tab" data-tab="install">Add-in Installation Guide</div>
+            <div class="tab" data-tab="about">About</div>
+        </div>
+        
+        <div id="api-key" class="tab-content active">
+            <div class="card">
+                <h2>OpenAI API Key Settings</h2>
+                <p>An OpenAI API key is required for email analysis and automatic reply generation.</p>
+                
+                <div class="form-group">
+                    <label for="apiKey">API Key:</label>
+                    <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off">
+                </div>
+                
+                <button id="saveApiKey">Save</button>
+                <div id="apiKeyMessage"></div>
+                
+                <div class="info">
+                    <p>The API key is stored only on your local computer and is not transmitted externally.</p>
+                    <p>Don't have an API key? You can generate one on the <a href="#" id="openApiKeyLink">OpenAI website</a>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="signature" class="tab-content">
+            <div class="card">
+                <h2>Email Signature Settings</h2>
+                <p>Manage your email signatures. These signatures can be added to your email replies.</p>
+                
+                <div class="form-group">
+                    <label for="signatureName">Signature Name:</label>
+                    <input type="text" id="signatureName" placeholder="e.g. Work, Personal">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signatureContent">Signature Content:</label>
+                    <textarea id="signatureContent" rows="6" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;" placeholder="Best regards,
+
+Your Name
+Your Title
+Company Name
+Address
+Phone: XXX-XXX-XXXX
+Email: your.email@example.com"></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="saveSignature">Save</button>
+                    <button id="updateSignature" style="display: none;">Update</button>
+                    <button id="cancelEdit" style="display: none; background-color: #777;">Cancel</button>
+                </div>
+                
+                <h3>Your Signatures</h3>
+                <div id="signaturesList" style="max-height: 300px; overflow-y: auto; border: 1px solid #eee; padding: 10px; border-radius: 3px;">
+                    <p id="noSignatures" style="color: #777; font-style: italic;">No signatures saved yet.</p>
+                </div>
+                
+                <div id="signatureMessage"></div>
+                
+                <div class="info">
+                    <p>Your signatures are stored locally on your computer.</p>
+                    <p>You can select a signature to append to your email replies in the Email AI Assistant add-in.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="install" class="tab-content">
+            <div class="card">
+                <h2>Outlook Add-in Installation Guide</h2>
+                <p>To install the Email AI Assistant in Outlook, follow these steps:</p>
+                
+                <ol>
+                    <li class="step">
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            <p>Click the button below to download the manifest file:</p>
+                            <a href="javascript:void(0);" id="directLink">Direct Download</a>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <p>Outlook Add-in Link</p>
+                        <a href="https://aka.ms/olksideload"></a>
+                        <p>Launch Outlook and click <strong>Get Add-ins</strong> or <strong>My Add-ins</strong> from the <strong>Main Menu</strong>.</p>
+                    </li>
+                    <li class="step">
+                        <p>In <strong>Manage My Add-ins</strong> settings, select <strong>Custom Add-ins</strong>.</p>
+                    </li>
+                    <li class="step">
+                        <p>Select the <strong>Add from File</strong> option and choose the downloaded manifest.xml file.</p>
+                        <div class="info">
+                            <p><strong>Note:</strong> Microsoft has removed the "Add from URL" option, so installation is only possible via file method.</p>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <p>Click <strong>Install</strong> to complete the add-in installation.</p>
+                    </li>
+                </ol>
+                
+                <div class="info">
+                    <p>This application needs to run continuously in the background while Outlook is running.</p>
+                    <p>You can enable the auto-start option at Windows startup for convenient use.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="about" class="tab-content">
+            <div class="card">
+                <h2>About Email AI Assistant</h2>
+                <p>Email AI Assistant is a tool that uses artificial intelligence to analyze emails in Outlook and generate automatic replies.</p>
+                
+                <h3>Key Features:</h3>
+                <ul>
+                    <li>Automatic email content summarization</li>
+                    <li>Automatic reply generation in various tones (professional, friendly, formal, casual)</li>
+                    <li>One-click reply application</li>
+                    <li>Runs in background for convenient use</li>
+                </ul>
+                
+                <h3>How to Use:</h3>
+                <ol>
+                    <li class="step">Set up your API key.</li>
+                    <li class="step">Install the add-in in Outlook.</li>
+                    <li class="step">Open an email and check the automatically generated summary and reply in the add-in panel.</li>
+                    <li class="step">Click the "Apply to Reply" button to use the automatically generated reply.</li>
+                </ol>
+                
+                <div class="info">
+                    <p>Version: <span id="appVersion">1.0.0</span></p>
+                    <p>© 2024 Email AI Assistant Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Load modular JavaScript files -->
+    <script type="module">
+        // Import settings modules
+        import settingsApp from './src/settings/settings-app.js';
+        // No need to import the other modules as they are imported by settings-app.js
+    </script>
+</body>
+</html>

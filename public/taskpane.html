@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://localhost:3000 https://appsforoffice.microsoft.com https://static2.sharepointonline.com https://api.openai.com https://ajax.aspnetcdn.com; script-src 'self' https://appsforoffice.microsoft.com https://static2.sharepointonline.com https://ajax.aspnetcdn.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://static2.sharepointonline.com 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://localhost:3000 https://api.openai.com;">
+    <title>Email AI Assistant</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+    <!-- Microsoft Ajax -->
+    <script type="text/javascript" src="MicrosoftAjax.js"></script>
+
+    <!-- FluentUI styles -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
+    <link href="taskpane.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="ms-font-m ms-Fabric">
+    <div id="app">
+        <!-- <div class="header">
+            <h1 class="ms-fontSize-xl">Email AI Assistant</h1>
+        </div> -->
+        
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <p>Analyzing email...</p>
+        </div>
+        
+        <div id="content" class="content">
+            <div class="section">
+                <h2 class="ms-fontSize-l">Email Analysis</h2>
+                <div id="email-info" class="info-box">
+                    <div><strong>From:</strong> <span id="sender"></span></div>
+                    <div><strong>Subject:</strong> <span id="subject"></span></div>
+                    <div><strong>Date:</strong> <span id="date"></span></div>
+                </div>
+                
+                <div class="collapsible">
+                    <button class="collapsible-button">View Content</button>
+                    <div class="collapsible-content">
+                        <div id="email-body" class="email-content"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="ms-fontSize-l">Summary</h2>
+                <div id="summary" class="result-box"></div>
+            </div>
+            
+            <div class="section">
+                <h2 class="ms-fontSize-l">Suggested Reply</h2>
+                <div id="reply" class="result-box"></div>
+                
+                <div class="button-container">
+                    <button id="apply-button" class="ms-Button ms-Button--primary">
+                        <span class="ms-Button-label">Apply to Reply</span>
+                    </button>
+                    <button id="regenerate-button" class="ms-Button">
+                        <span class="ms-Button-label">Regenerate</span>
+                    </button>
+                </div>
+                
+                <div class="form-group signature-section">
+                    <label for="signature">Add Signature</label>
+                    <select id="signature" class="ms-TextField-field">
+                        <option value="">None</option>
+                        <!-- Signatures will be loaded here -->
+                    </select>
+                </div>
+            </div>
+            
+            <div class="section settings-section">
+                <h2 class="ms-fontSize-l">Settings</h2>
+                <div class="form-group">
+                    <label for="api-key">OpenAI API Key</label>
+                    <div class="input-with-button">
+                        <input type="password" id="api-key" class="ms-TextField-field" placeholder="sk-..." />
+                        <button id="save-api-key" class="ms-Button">
+                            <span class="ms-Button-label">Save</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tone">Reply Tone</label>
+                    <select id="tone" class="ms-TextField-field">
+                        <option value="professional">Professional</option>
+                        <option value="friendly">Friendly</option>
+                        <option value="formal">Formal</option>
+                        <option value="casual">Casual</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script type="module" src="taskpane.js"></script>
+</body>
+</html>

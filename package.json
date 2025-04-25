@@ -1,0 +1,47 @@
+{
+  "name": "email-ai-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered email assistant for Outlook",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "generate-cert": "node scripts/generate-cert.js",
+    "server": "node server.js",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "author": "Email AI Assistant Team",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.796.0",
+    "electron-log": "^5.3.4",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.6.2",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.7",
+    "openai": "^3.2.1",
+    "selfsigned": "^2.1.1"
+  },
+  "devDependencies": {
+    "electron": "^25.2.0",
+    "electron-builder": "^24.4.0"
+  },
+  "build": {
+    "appId": "com.emailai.assistant",
+    "productName": "Email AI Assistant",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Email AI Assistant",
+      "artifactName": "EmailAIAssistant-Setup-${version}.${ext}"
+    }
+  }
+}

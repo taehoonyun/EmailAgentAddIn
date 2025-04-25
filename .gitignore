@@ -1,0 +1,61 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Electron app distribution
+dist/
+out/
+build/
+
+# SSL Certificates
+*.pem
+*.key
+*.crt
+*.cer
+cert/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Config files with sensitive info
+config.json
+electron-store-config.json
+
+# Cache and temp files
+.cache/
+.temp/
+.tmp/
+
+# Build output
+public/build/
+dist/
+assets/build/
+
+# User data
+user-data/
+userData/
+
+# Electron specific
+.electron-builder-cache/ 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://localhost:3000 https://appsforoffice.microsoft.com https://ajax.aspnetcdn.com; script-src 'self' https://appsforoffice.microsoft.com https://ajax.aspnetcdn.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
+    <title>Email AI Assistant Commands</title>
+    
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+    <!-- Microsoft Ajax -->
+    <script type="text/javascript" src="MicrosoftAjax.js"></script>
+
+    <script type="text/javascript">
+        // Initialize Office
+        Office.onReady(() => {
+            // Register command handlers
+        });
+        
+        // Open taskpane
+        function openTaskpane(event) {
+            Office.addin.showAsTaskpane();
+            event.completed();
+        }
+        
+        // Register commands
+        Office.actions.associate("openTaskpane", openTaskpane);
+    </script>
+</head>
+<body>
+    <!-- This file is for command handlers, no UI needed -->
+</body>
+</html>
